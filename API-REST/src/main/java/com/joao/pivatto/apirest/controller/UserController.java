@@ -3,7 +3,6 @@ package com.joao.pivatto.apirest.controller;
 import com.joao.pivatto.apirest.dto.CreateUserDTO;
 import com.joao.pivatto.apirest.dto.UpdateUserDTO;
 import com.joao.pivatto.apirest.dto.UserDTO;
-import com.joao.pivatto.apirest.model.User;
 import com.joao.pivatto.apirest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
