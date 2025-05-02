@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joao.pivatto.apirest.dto.CreateUserDTO;
 import com.joao.pivatto.apirest.dto.UpdateUserDTO;
 import com.joao.pivatto.apirest.dto.UserDTO;
+import com.joao.pivatto.apirest.handler.InvalidFieldException;
+import com.joao.pivatto.apirest.handler.ResourceNotFoundException;
 import com.joao.pivatto.apirest.infrastructure.TokenService;
 import com.joao.pivatto.apirest.infrastructure.Token;
 import com.joao.pivatto.apirest.model.Role;
@@ -32,7 +34,7 @@ public class UserService {
 
     public UserDTO find(int id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find user with id: " + id + "."));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find user with id: " + id + "."));
         return new UserDTO(user);
     }
 
@@ -57,7 +59,7 @@ public class UserService {
         List<Role> roles = roleRepository.findAllByAuthorityIn(createUserDTO.getRoles());
 
         if (roles.size() != createUserDTO.getRoles().size()) {
-            throw new RuntimeException("Invalid roles: " + createUserDTO.getRoles() + ". Available roles: [" +
+            throw new InvalidFieldException("Invalid roles: " + createUserDTO.getRoles() + ". Available roles: [" +
                     roles.stream()
                     .map(Role::getAuthority)
                     .collect(Collectors.joining(", "))
@@ -71,7 +73,7 @@ public class UserService {
 
     public String updateUser(int id, UpdateUserDTO updateUserDTO) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find user with id: " + id + "."));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find user with id: " + id + "."));
 
         if (updateUserDTO.getName() != null && !updateUserDTO.getName().isBlank()) {
             user.setName(updateUserDTO.getName());
@@ -88,7 +90,7 @@ public class UserService {
                 List<Role> roles = roleRepository.findAllByAuthorityIn(updateUserDTO.getRoles());
 
                 if (roles.size() != updateUserDTO.getRoles().size()) {
-                    throw new RuntimeException("Invalid roles: " + updateUserDTO.getRoles() + ". Available roles: [" +
+                    throw new InvalidFieldException("Invalid roles: " + updateUserDTO.getRoles() + ". Available roles: [" +
                             roles.stream()
                                     .map(Role::getAuthority)
                                     .collect(Collectors.joining(", "))

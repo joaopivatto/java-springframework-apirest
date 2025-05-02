@@ -1,5 +1,6 @@
 package com.joao.pivatto.apirest.doc;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -8,6 +9,8 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.parameters.RequestBody;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +30,16 @@ public class ApiConfig {
                                 .url("https://github.com/joaopivatto")
                                 .email("jgpivatto@gmail.com")
                         )
+                )
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .name("Authorization")
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
+                        )
                 );
     }
 
@@ -35,7 +48,9 @@ public class ApiConfig {
         return openApi -> {
             openApi.getPaths().values().forEach(pathItem -> {
                 pathItem.readOperations().forEach(operation -> {
-                    operation.setRequestBody(getJsonRequestBody());
+                    if (operation.getRequestBody() == null) {
+                        operation.setRequestBody(getJsonRequestBody());
+                    }
                     operation.setResponses(getJsonResponse());
                 });
             });

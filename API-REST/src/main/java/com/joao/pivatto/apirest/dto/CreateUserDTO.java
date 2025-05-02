@@ -1,5 +1,7 @@
 package com.joao.pivatto.apirest.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public class CreateUserDTO {
