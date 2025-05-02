@@ -1,0 +1,29 @@
+[33mcommit a04f16f743dfa7cce863abbaedbe73bf827ce72e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32m2.0LTS[m[33m)[m
+Author: Joao Pivatto <jgpivatto@gmail.com>
+Date:   Fri May 2 15:51:32 2025 -0300
+
+    Adding Product, Order and OrderItem classes and some exceptions
+
+[33mcommit 72f5ddbad12d65e3eb42c27cafb9ab6bba31103c[m[33m ([m[1;31morigin/1.1-LTS[m[33m, [m[1;32m1.1-LTS[m[33m)[m
+Author: Joao Pivatto <jgpivatto@gmail.com>
+Date:   Wed Apr 30 09:28:39 2025 -0300
+
+    Adding Swagger
+
+[33mcommit f146452d598c620d797e356ca72de96dc514864c[m[33m ([m[1;31morigin/1.0-LTS[m[33m, [m[1;32m1.0-LTS[m[33m)[m
+Author: Joao Pivatto <jgpivatto@gmail.com>
+Date:   Fri Apr 18 17:22:44 2025 -0300
+
+    Add DB and Adjusting README
+
+[33mcommit 83681047120e154453eef718842b36f78f31eba8[m
+Author: Joao Pivatto <jgpivatto@gmail.com>
+Date:   Fri Apr 18 17:11:48 2025 -0300
+
+    Add API 1.0 LTS
+
+[33mcommit 5bf660be7833124d25fba23ad9a8f007e858c4d3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: João Guilherme Pivatto <jgpivatto@gmail.com>
+Date:   Fri Apr 18 16:46:26 2025 -0300
+
+    Initial commit

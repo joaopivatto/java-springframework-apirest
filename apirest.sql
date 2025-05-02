@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 18/04/2025 às 20:16
+-- Tempo de geração: 02/05/2025 às 18:56
 -- Versão do servidor: 10.11.11-MariaDB-0ubuntu0.24.04.2
 -- Versão do PHP: 8.3.6
 
@@ -24,6 +24,55 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `order`
+--
+
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `order`
+--
+
+INSERT INTO `order` (`id`, `person_id`) VALUES
+(2, 1),
+(3, 3),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`) VALUES
+(1, 2, 3, 1),
+(2, 3, 4, 2),
+(3, 6, 4, 2),
+(4, 7, 4, 2),
+(5, 8, 1, 3),
+(6, 8, 4, 2),
+(7, 9, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `person`
 --
 
@@ -39,7 +88,30 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`id`, `name`, `gender`, `birth_date`) VALUES
-(1, 'João Pivatto', 'Male', '2007-04-04');
+(1, 'João Pivatto', 'Male', '2007-04-04'),
+(3, 'Person', 'Female', '2000-04-19');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `product`
+--
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `price` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `description`, `price`) VALUES
+(1, 'Coke', 'This is the Coke', 5.5),
+(3, 'Guaraná', 'This is the Guaraná', 5.5),
+(4, 'Fanta', 'This is the Fanta', 5.5);
 
 -- --------------------------------------------------------
 
@@ -107,9 +179,27 @@ INSERT INTO `user_authorities` (`user_id`, `authorities_id`) VALUES
 --
 
 --
+-- Índices de tabela `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices de tabela `person`
 --
 ALTER TABLE `person`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `product`
+--
+ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -129,10 +219,28 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT de tabela `order`
+--
+ALTER TABLE `order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de tabela `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de tabela `person`
 --
 ALTER TABLE `person`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `role`
