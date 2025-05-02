@@ -50,10 +50,10 @@ classDiagram
     }
 
     %% Relações
-    Person  -->  Order : places
-    Order  -->  OrderItem : contains
-    Product -->  OrderItem : referenced in
-    User -->  UserAuthorities : has
-    Role  --> UserAuthorities : assigned to
+    Person "1" --> "0..*" Order : places
+    Order "1" --> "0..*" OrderItem : contains
+    Product "1" --> "0..*" OrderItem : referenced in
+    User "1" --> "0..*" UserAuthorities : has
+    Role "1" --> "0..*" UserAuthorities : assigned to
 
 ```
