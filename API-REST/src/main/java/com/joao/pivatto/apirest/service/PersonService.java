@@ -1,6 +1,7 @@
 package com.joao.pivatto.apirest.service;
 
 import com.joao.pivatto.apirest.dto.PersonDTO;
+import com.joao.pivatto.apirest.handler.ResourceNotFoundException;
 import com.joao.pivatto.apirest.model.Person;
 import com.joao.pivatto.apirest.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,11 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public PersonDTO find(int id){
+    public PersonDTO find(int id) {
         Person person = personRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find person with id: " + id + "."));
+                .orElseThrow(() -> new ResourceNotFoundException("Could not find person with id: " + id + "."));
 
         return new PersonDTO(person);
-
     }
 
     public List<PersonDTO> search(){
@@ -41,6 +41,9 @@ public class PersonService {
     }
 
     public String delete(int id){
+        if (personRepository.findById(id).isEmpty()) {
+            throw new ResourceNotFoundException("Could not delete person with id: " + id + ", because it does not exist.");
+        }
         personRepository.deleteById(id);
         return "Person successfully deleted!";
     }

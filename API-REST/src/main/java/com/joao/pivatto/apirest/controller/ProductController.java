@@ -1,9 +1,9 @@
 package com.joao.pivatto.apirest.controller;
 
-import com.joao.pivatto.apirest.dto.PersonDTO;
+import com.joao.pivatto.apirest.dto.ProductDTO;
 import com.joao.pivatto.apirest.handler.ResourceNotFoundException;
-import com.joao.pivatto.apirest.model.Person;
-import com.joao.pivatto.apirest.service.PersonService;
+import com.joao.pivatto.apirest.model.Product;
+import com.joao.pivatto.apirest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
-public class PersonController {
+@RequestMapping("/product")
+public class ProductController {
 
     @Autowired
-    private PersonService personService;
+    private ProductService productService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> find(@PathVariable int id) {
+    public ResponseEntity<?> find(@PathVariable int id){
         try {
-            return ResponseEntity.ok(personService.find(id));
+            return ResponseEntity.ok(productService.find(id));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
@@ -30,33 +30,32 @@ public class PersonController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<PersonDTO>> search() {
-        return ResponseEntity.ok(personService.search());
+    public ResponseEntity<List<ProductDTO>> search(){
+        return ResponseEntity.ok(productService.search());
     }
 
     @GetMapping("/name")
-    public ResponseEntity<List<PersonDTO>> searchOrderByName() {
-        return ResponseEntity.ok(personService.searchOrderByName());
+    public ResponseEntity<List<ProductDTO>> searchOrderByName(){
+        return ResponseEntity.ok(productService.searchOrderByName());
     }
 
     @PostMapping("")
-    public ResponseEntity<?> save(@RequestBody Person person) {
+    public ResponseEntity<?> save(@RequestBody Product product){
         try{
-            return ResponseEntity.ok(personService.save(person));
+            return ResponseEntity.ok(productService.save(product));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not save person: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not save product: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable int id) {
+    public ResponseEntity<?> delete(@PathVariable int id){
         try {
-            return ResponseEntity.ok(personService.delete(id));
+            return ResponseEntity.ok(productService.delete(id));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
 }
