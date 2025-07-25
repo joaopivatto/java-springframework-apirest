@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class UserDTO {
 
+    private int id;
+
     private String name;
 
     private String login;
@@ -13,6 +15,7 @@ public class UserDTO {
     private String roles;
 
     public UserDTO(User user) {
+        this.id = user.getId();
         this.name = user.getName();
         this.login = user.getLogin();
         this.roles = user.getAuthorities().stream()
@@ -20,6 +23,13 @@ public class UserDTO {
                 .collect(Collectors.joining(", "));
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

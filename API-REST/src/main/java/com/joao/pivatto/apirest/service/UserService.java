@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,7 +72,7 @@ public class UserService {
         return "User successfully registered!";
     }
 
-    public String updateUser(int id, UpdateUserDTO updateUserDTO) {
+    public Map<String, String> updateUser(int id, UpdateUserDTO updateUserDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find user with id: " + id + "."));
 
@@ -91,7 +92,7 @@ public class UserService {
 
                 if (roles.size() != updateUserDTO.getRoles().size()) {
                     throw new InvalidFieldException("Invalid roles: " + updateUserDTO.getRoles() + ". Available roles: [" +
-                            roles.stream()
+                            roleRepository.findAll().stream()
                                     .map(Role::getAuthority)
                                     .collect(Collectors.joining(", "))
                             + "].");
@@ -102,7 +103,7 @@ public class UserService {
         }
 
         userRepository.save(user);
-        return "User successfully updated!";
+        return Map.of("message", "User successfully updated!");
     }
 
 }
