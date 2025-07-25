@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/order")
@@ -23,9 +24,9 @@ public class OrderController {
         try{
             return ResponseEntity.ok(orderService.find(id));
         } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", e.getMessage()));
         }
     }
 
@@ -39,7 +40,7 @@ public class OrderController {
         try{
             return ResponseEntity.ok(orderService.save(makeOrderDTO));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not make order: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Could not make order"));
         }
     }
 
