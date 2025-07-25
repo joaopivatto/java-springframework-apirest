@@ -1,5 +1,7 @@
 package com.joao.pivatto.apirest.infrastructure;
 
+import com.joao.pivatto.apirest.security.CustomAccessDeniedHandler;
+import com.joao.pivatto.apirest.security.CustomAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,13 @@ public class SecurityConfiguration {
     @Autowired
     private SecurityFilter securityFilter;
 
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -33,6 +42,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/person/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptionHandlingConfigurer -> exceptionHandlingConfigurer
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
