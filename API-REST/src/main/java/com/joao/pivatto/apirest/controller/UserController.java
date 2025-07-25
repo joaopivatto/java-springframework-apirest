@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -47,14 +48,14 @@ public class UserController {
         }
     }
 
-    @PostMapping("/edit/{id}")
+    @PatchMapping("/edit/{id}")
     public ResponseEntity<?> edit(@PathVariable int id, @RequestBody UpdateUserDTO updateUserDTO) {
         try {
             return ResponseEntity.ok(userService.updateUser(id, updateUserDTO));
         } catch (InvalidFieldException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(Map.of("message", e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected Error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", e.getMessage()));
         }
     }
 
