@@ -23,6 +23,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create().
                     withIssuer("joaopivatto-apirest").
+                    withClaim("userId", user.getId()).
                     withSubject(user.getLogin()).
                     withExpiresAt(genarateExpirationDate()).
                     sign(algorithm);
