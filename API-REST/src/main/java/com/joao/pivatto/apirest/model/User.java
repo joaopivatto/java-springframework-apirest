@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class User implements UserDetails {
@@ -63,6 +64,10 @@ public class User implements UserDetails {
 
     public void setAuthorities(List<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    public List<String> getRoles() {
+        return this.authorities.stream().map(Role::getAuthority).collect(Collectors.toList());
     }
 
     @Override

@@ -32,8 +32,14 @@ public class LoginController {
         var usernamePassword = new UsernamePasswordAuthenticationToken(login.getLogin(), login.getPassword());
         try {
             var auth = this.authenticationManager.authenticate(usernamePassword);
-            var token = tokenService.generateToken((User) auth.getPrincipal());
-            return ResponseEntity.ok(new Token(token));
+            var user = (User) auth.getPrincipal();
+            var token = tokenService.generateToken(user);
+            return ResponseEntity.ok(Map.of(
+                    "token", Map.of("value", token),
+                    "userId", user.getId(),
+                    "userLogin", user.getLogin(),
+                    "userRole", user.getRoles()
+            ));
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("message", "Bad credentials"));
