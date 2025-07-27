@@ -24,6 +24,7 @@ public class TokenService {
             return JWT.create().
                     withIssuer("joaopivatto-apirest").
                     withClaim("userId", user.getId()).
+                    withClaim("userRoles", user.getRoles()).
                     withSubject(user.getLogin()).
                     withExpiresAt(genarateExpirationDate()).
                     sign(algorithm);
